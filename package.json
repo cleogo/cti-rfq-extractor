@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "jest",
+    "test:catalog": "jest --testPathPatterns=catalog.test.ts --no-coverage"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.111.0",
@@ -18,12 +20,23 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/jest": "^30.0.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.10",
+    "jest": "^30.4.2",
     "tailwindcss": "^4",
+    "ts-jest": "^29.4.11",
     "typescript": "^5"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "moduleNameMapper": {
+      "^@/(.*)$": "<rootDir>/$1",
+      "^server-only$": "<rootDir>/lib/__mocks__/server-only.ts"
+    }
   }
 }
