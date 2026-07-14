@@ -33,7 +33,7 @@ jobs:
 
       # Step 4 — Run all unit tests
       - name: Run tests
-        run: npx jest --no-coverage
+        run: npm test
         env:
           # Dummy key for CI — tests are pure math, no real API calls made
           ANTHROPIC_API_KEY: sk-ant-test-key-for-ci-only

@@ -39,7 +39,7 @@ instead of researches.
 
 ```bash
 # 1. Clone the repo
-git clone https://github.com/YOUR-USERNAME/cti-rfq-extractor.git
+git clone https://github.com/cleogo/cti-rfq-extractor.git
 cd cti-rfq-extractor
 
 # 2. Install dependencies
@@ -70,7 +70,13 @@ environment variable settings for production.
 ## Run tests
 
 ```bash
-npx jest --no-coverage
+npm test
+```
+
+Or run only the catalog tests:
+
+```bash
+npm run test:catalog
 ```
 
 11 unit tests covering warehouse routing and catalog search.
@@ -78,3 +84,34 @@ npx jest --no-coverage
 ---
 
 ## Project structure
+
+```
+cti-rfq-extractor/
+├── app/
+│   ├── api/extract/route.ts   # Server-side Claude API route
+│   ├── page.tsx               # Main coordinator UI
+│   ├── layout.tsx
+│   └── globals.css
+├── lib/
+│   ├── catalog.ts             # Loads CTI XLSX catalog (server-only)
+│   ├── warehouse.ts           # Deterministic warehouse routing rules
+│   ├── types.ts               # Shared TypeScript types
+│   └── catalog.test.ts        # Unit tests (11 tests)
+├── data/
+│   └── CTI_catalog.xlsx       # CTI product masterlist (~1,000 SKUs)
+├── .github/workflows/ci.yml   # GitHub Actions — tests on every push
+├── .env.local                 # Local API key (never commit)
+└── package.json
+```
+
+---
+
+## CI/CD
+
+Every push to `main` triggers GitHub Actions:
+
+1. `npm ci` — install dependencies
+2. `npm test` — run 11 unit tests
+3. `npx tsc --noEmit` — TypeScript type check
+
+Tests use pure logic only — no live Anthropic API calls in CI.
